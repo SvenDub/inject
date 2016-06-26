@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SvenDub/inject.svg?branch=master)](https://travis-ci.org/SvenDub/inject)
+[![Maven Central](https://img.shields.io/maven-central/v/nl.svendubbeld/inject.svg)](https://maven-badges.herokuapp.com/maven-central/nl.svendubbeld/inject)
 # Inject
 
 Inject is a small Dependency Injection tool for the JVM. It is written in Kotlin and also supports Java.
