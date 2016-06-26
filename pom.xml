@@ -8,13 +8,8 @@
     <artifactId>inject</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>Inject</name>
     <description>Dependency Injection tool</description>
-
-    <licenses>
-        <license>
-            <name>MIT</name>
-        </license>
-    </licenses>
 
     <properties>
         <kotlin.version>1.0.2-1</kotlin.version>
@@ -69,5 +64,26 @@
             </plugin>
         </plugins>
     </build>
+
+    <scm>
+        <url>https://github.com/SvenDub/inject.git</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>svend</id>
+            <name>Sven Dubbeld</name>
+            <email>sven@svendubbeld.nl</email>
+            <url>https://svendubbeld.nl/</url>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
 </project>
