@@ -45,6 +45,13 @@ class InjectorTest {
     }
 
     @Test
+    fun testRegisterMap() {
+        Injector.register(mapOf(DataObject::class.java to DerivedDataObject::class.java));
+
+        Assert.assertTrue(Injector.resolve<DataObject>() is DerivedDataObject)
+    }
+
+    @Test
     fun testResolve() {
         Injector.register<DataObject, DerivedDataObject>();
 

@@ -5,7 +5,6 @@ import nl.svendubbeld.inject.exception.TypeNotResolvedException
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-
 /**
  * Handles dependency injection. Types can be registered using [register] and resolved using [resolve].
  */
