@@ -20,7 +20,7 @@ class InjectorTest {
 
     @Test(expected = TypeNotResolvedException::class)
     fun testNotRegisteredParam() {
-        var dataObject: DataObject = Injector.resolve(DataObject::class.java) as DataObject;
+        var dataObject: DataObject = Injector.resolve<DataObject>(DataObject::class.java);
     }
 
     @Test(expected = ConstructorException::class)
@@ -62,6 +62,6 @@ class InjectorTest {
     fun testResolveParam() {
         Injector.register<DataObject, DerivedDataObject>();
 
-        Assert.assertTrue(Injector.resolve(DataObject::class.java) is DerivedDataObject)
+        Assert.assertTrue(Injector.resolve<DataObject>(DataObject::class.java) is DerivedDataObject)
     }
 }

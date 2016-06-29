@@ -47,9 +47,17 @@ object Injector {
      * Resolve a given type to its implementation.
      *
      * @param T The type to resolve.
+     * @param contract The type to resolve.
      * @return The implementation of the given type.
      */
-    inline fun <reified T : Any> resolve(): T = resolve(T::class.java as Class<*>) as T
+    fun <T : Any> resolve(contract: Class<*>): T {
+        try {
+            @Suppress("UNCHECKED_CAST")
+            return resolveType(contract) as T;
+        } catch(e: ClassCastException) {
+            throw TypeNotResolvedException(contract, e);
+        }
+    }
 
     /**
      * Resolve a given type to its implementation.
@@ -57,7 +65,17 @@ object Injector {
      * @param T The type to resolve.
      * @return The implementation of the given type.
      */
-    fun resolve(contract: Class<*>): Any {
+    inline fun <reified T : Any> resolve(): T = resolveType(T::class.java as Class<*>) as T;
+
+    /**
+     * Resolve a given type to its implementation.
+     *
+     * @param contract The type to resolve.
+     * @return The implementation of the given type.
+     *
+     * @see resolve for the type safe version.
+     */
+    fun resolveType(contract: Class<*>): Any {
         if (_instances.containsKey(contract)) {
             return _instances[contract]!!;
         }
@@ -84,7 +102,7 @@ object Injector {
 
             // Create using available constructor that takes parameters that are registered and therefore can also be injected
             val params: List<Any> = ArrayList(constructorParams.size);
-            params.plus(constructorParams.map { param -> resolve(param.type) });
+            params.plus(constructorParams.map { param -> resolveType(param.type) });
 
             val instance = constructor.newInstance(*params.toTypedArray())
             _instances[contract] = instance;
