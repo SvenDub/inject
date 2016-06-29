@@ -13,12 +13,12 @@ object Injector {
     /**
      * Mapping of all types to their implementation.
      */
-    var _types: MutableMap<Class<*>, Class<*>> = ConcurrentHashMap();
+    private var _types: MutableMap<Class<*>, Class<*>> = ConcurrentHashMap();
 
     /**
      * Mapping of all instances of implementations.
      */
-    var _instances: MutableMap<Class<*>, Any> = ConcurrentHashMap();
+    private var _instances: MutableMap<Class<*>, Any> = ConcurrentHashMap();
 
     /**
      * Register the implementation of a type.
@@ -65,28 +65,28 @@ object Injector {
         if (_types.containsKey(contract)) {
 
             // Resolve the type
-            var implementation: Class<*> = _types[contract]!!;
+            val implementation: Class<*> = _types[contract]!!;
 
             // Get constructor
             if (implementation.constructors.size == 0) {
                 throw ConstructorException();
             }
 
-            var constructor = implementation.constructors[0];
-            var constructorParams = constructor.parameters;
+            val constructor = implementation.constructors[0];
+            val constructorParams = constructor.parameters;
 
             // Use default constructor if available
             if (constructorParams.size == 1) {
-                var instance = constructor.newInstance();
+                val instance = constructor.newInstance();
                 _instances[contract] = instance;
                 return instance;
             }
 
             // Create using available constructor that takes parameters that are registered and therefore can also be injected
-            var params: List<Any> = ArrayList(constructorParams.size);
+            val params: List<Any> = ArrayList(constructorParams.size);
             params.plus(constructorParams.map { param -> resolve(param.type) });
 
-            var instance = constructor.newInstance(*params.toTypedArray())
+            val instance = constructor.newInstance(*params.toTypedArray())
             _instances[contract] = instance;
             return instance;
         } else {
