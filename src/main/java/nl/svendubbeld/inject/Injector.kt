@@ -50,7 +50,7 @@ object Injector {
      * @param contract The type to resolve.
      * @return The implementation of the given type.
      */
-    fun <T : Any> resolve(contract: Class<*>): T {
+    fun <T : Any> resolve(contract: Class<T>): T {
         try {
             @Suppress("UNCHECKED_CAST")
             return resolveType(contract) as T;

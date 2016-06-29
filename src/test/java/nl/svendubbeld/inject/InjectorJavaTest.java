@@ -17,20 +17,20 @@ public class InjectorJavaTest {
 
     @Test(expected = TypeNotResolvedException.class)
     public void testNotRegistered() {
-        DataObject dataObject = mInjector.<DataObject>resolve(DataObject.class);
+        @SuppressWarnings("unused") DataObject dataObject = mInjector.resolve(DataObject.class);
     }
 
     @Test
     public void testRegister() {
         mInjector.register(DataObject.class, DerivedDataObject.class);
 
-        Assert.assertTrue(mInjector.<DataObject>resolve(DataObject.class) instanceof DerivedDataObject);
+        Assert.assertTrue(mInjector.resolve(DataObject.class) instanceof DerivedDataObject);
     }
 
     @Test(expected = ConstructorException.class)
     public void testRegisterConstructorless() {
         mInjector.register(DataObject.class, ConstructorlessDataObject.class);
 
-        mInjector.<DataObject>resolve(DataObject.class);
+        mInjector.resolve(DataObject.class);
     }
 }

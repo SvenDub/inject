@@ -15,12 +15,14 @@ class InjectorTest {
 
     @Test(expected = TypeNotResolvedException::class)
     fun testNotRegistered() {
+        @Suppress("UNUSED_VARIABLE")
         var dataObject: DataObject = Injector.resolve<DataObject>();
     }
 
     @Test(expected = TypeNotResolvedException::class)
     fun testNotRegisteredParam() {
-        var dataObject: DataObject = Injector.resolve<DataObject>(DataObject::class.java);
+        @Suppress("UNUSED_VARIABLE")
+        var dataObject: DataObject = Injector.resolve(DataObject::class.java);
     }
 
     @Test(expected = ConstructorException::class)
@@ -62,6 +64,6 @@ class InjectorTest {
     fun testResolveParam() {
         Injector.register<DataObject, DerivedDataObject>();
 
-        Assert.assertTrue(Injector.resolve<DataObject>(DataObject::class.java) is DerivedDataObject)
+        Assert.assertTrue(Injector.resolve(DataObject::class.java) is DerivedDataObject)
     }
 }
