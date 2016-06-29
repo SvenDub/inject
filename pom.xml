@@ -6,12 +6,14 @@
 
     <groupId>nl.svendubbeld</groupId>
     <artifactId>inject</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <name>Inject</name>
     <description>Dependency Injection tool</description>
+    <url>https://github.com/SvenDub/inject</url>
 
     <properties>
+        <dokka.version>0.9.8</dokka.version>
         <kotlin.version>1.0.2-1</kotlin.version>
         <junit.version>4.12</junit.version>
     </properties>
@@ -112,6 +114,20 @@
             </plugin>
 
             <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>${dokka.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>javadocJar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>1.6</version>
@@ -160,5 +176,13 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
