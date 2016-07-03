@@ -1,5 +1,7 @@
 package nl.svendubbeld.inject
 
+import nl.svendubbeld.inject.Injector.register
+import nl.svendubbeld.inject.Injector.resolve
 import nl.svendubbeld.inject.exception.ConstructorException
 import nl.svendubbeld.inject.exception.TypeNotResolvedException
 import java.util.*
@@ -91,18 +93,17 @@ object Injector {
             }
 
             val constructor = implementation.constructors[0];
-            val constructorParams = constructor.parameters;
+            val constructorParams = constructor.parameterTypes;
 
             // Use default constructor if available
-            if (constructorParams.size == 1) {
+            if (constructorParams.size == 0) {
                 val instance = constructor.newInstance();
                 _instances[contract] = instance;
                 return instance;
             }
 
             // Create using available constructor that takes parameters that are registered and therefore can also be injected
-            val params: List<Any> = ArrayList(constructorParams.size);
-            params.plus(constructorParams.map { param -> resolveType(param.type) });
+            val params: List<Any> = ArrayList(constructorParams.map { param -> resolveType(param) })
 
             val instance = constructor.newInstance(*params.toTypedArray())
             _instances[contract] = instance;

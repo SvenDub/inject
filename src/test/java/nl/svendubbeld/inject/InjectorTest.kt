@@ -66,4 +66,14 @@ class InjectorTest {
 
         Assert.assertTrue(Injector.resolve(DataObject::class.java) is DerivedDataObject)
     }
+
+    @Test
+    fun testResolveWithParam() {
+        Injector.register<DataObject, ParameterDataObject>();
+        Injector.register<DerivedDataObject, DerivedDataObject>();
+
+        val resolved = Injector.resolve<DataObject>()
+        Assert.assertTrue(resolved is ParameterDataObject)
+        Assert.assertNotNull((resolved as ParameterDataObject).derivedDataObject)
+    }
 }

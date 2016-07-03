@@ -33,4 +33,13 @@ public class InjectorJavaTest {
 
         mInjector.resolve(DataObject.class);
     }
+
+    @Test
+    public void testResolveWithParam() {
+        mInjector.register(DataObject.class, ParameterDataObject.class);
+        mInjector.register(DerivedDataObject.class, DerivedDataObject.class);
+
+        ParameterDataObject dataObject = (ParameterDataObject) mInjector.resolve(DataObject.class);
+        Assert.assertNotNull(dataObject.getDerivedDataObject());
+    }
 }
