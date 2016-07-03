@@ -6,6 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InjectorJavaTest {
 
     private Injector mInjector = Injector.INSTANCE;
@@ -41,5 +44,21 @@ public class InjectorJavaTest {
 
         ParameterDataObject dataObject = (ParameterDataObject) mInjector.resolve(DataObject.class);
         Assert.assertNotNull(dataObject.getDerivedDataObject());
+    }
+
+    @Test
+    public void testRegisterCompatible() {
+        Map<Class<?>, Class<?>> map = new HashMap<Class<?>, Class<?>>();
+        map.put(DataObject.class, DerivedDataObject.class);
+        mInjector.register(map);
+
+        Assert.assertTrue(mInjector.resolve(DataObject.class) instanceof DerivedDataObject);
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void testRegisterIncompatible() {
+        Map<Class<?>, Class<?>> map = new HashMap<Class<?>, Class<?>>();
+        map.put(DerivedDataObject.class, ConstructorlessDataObject.class);
+        mInjector.register(map);
     }
 }

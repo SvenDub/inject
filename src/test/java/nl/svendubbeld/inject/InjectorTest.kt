@@ -10,67 +10,72 @@ class InjectorTest {
 
     @Before
     fun setUp() {
-        Injector.reset();
+        Injector.reset()
     }
 
     @Test(expected = TypeNotResolvedException::class)
     fun testNotRegistered() {
         @Suppress("UNUSED_VARIABLE")
-        var dataObject: DataObject = Injector.resolve<DataObject>();
+        var dataObject: DataObject = Injector.resolve<DataObject>()
     }
 
     @Test(expected = TypeNotResolvedException::class)
     fun testNotRegisteredParam() {
         @Suppress("UNUSED_VARIABLE")
-        var dataObject: DataObject = Injector.resolve(DataObject::class.java);
+        var dataObject: DataObject = Injector.resolve(DataObject::class.java)
     }
 
     @Test(expected = ConstructorException::class)
     fun testRegisterConstructorless() {
-        Injector.register<DataObject, ConstructorlessDataObject>();
+        Injector.register<DataObject, ConstructorlessDataObject>()
 
-        Injector.resolve<DataObject>();
+        Injector.resolve<DataObject>()
     }
 
     @Test
     fun testRegister() {
-        Injector.register<DataObject, DerivedDataObject>();
+        Injector.register<DataObject, DerivedDataObject>()
 
         Assert.assertTrue(Injector.resolve<DataObject>() is DerivedDataObject)
     }
 
     @Test
     fun testRegisterParam() {
-        Injector.register(DataObject::class.java, DerivedDataObject::class.java);
+        Injector.register(DataObject::class.java, DerivedDataObject::class.java)
 
         Assert.assertTrue(Injector.resolve<DataObject>() is DerivedDataObject)
     }
 
     @Test
     fun testRegisterMap() {
-        Injector.register(mapOf(DataObject::class.java to DerivedDataObject::class.java));
+        Injector.register(mapOf(DataObject::class.java to DerivedDataObject::class.java))
 
         Assert.assertTrue(Injector.resolve<DataObject>() is DerivedDataObject)
     }
 
+    @Test(expected = ClassCastException::class)
+    fun testRegisterMapIncompatible() {
+        Injector.register(mapOf(DerivedDataObject::class.java to ConstructorlessDataObject::class.java))
+    }
+
     @Test
     fun testResolve() {
-        Injector.register<DataObject, DerivedDataObject>();
+        Injector.register<DataObject, DerivedDataObject>()
 
         Assert.assertTrue(Injector.resolve<DataObject>() is DerivedDataObject)
     }
 
     @Test
     fun testResolveParam() {
-        Injector.register<DataObject, DerivedDataObject>();
+        Injector.register<DataObject, DerivedDataObject>()
 
         Assert.assertTrue(Injector.resolve(DataObject::class.java) is DerivedDataObject)
     }
 
     @Test
     fun testResolveWithParam() {
-        Injector.register<DataObject, ParameterDataObject>();
-        Injector.register<DerivedDataObject, DerivedDataObject>();
+        Injector.register<DataObject, ParameterDataObject>()
+        Injector.register<DerivedDataObject, DerivedDataObject>()
 
         val resolved = Injector.resolve<DataObject>()
         Assert.assertTrue(resolved is ParameterDataObject)
