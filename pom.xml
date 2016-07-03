@@ -6,7 +6,7 @@
 
     <groupId>nl.svendubbeld</groupId>
     <artifactId>inject</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
 
     <name>Inject</name>
     <description>Dependency Injection tool</description>
